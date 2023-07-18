@@ -383,6 +383,7 @@ console.log(Number('230_000')); // ERROR
 console.log(parseInt('230_000')); // 230
 */
 
+/*
 // Working with BigInt
 console.log(2 ** 53 - 1); // 9007199254740991
 console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
@@ -415,3 +416,39 @@ console.log(huge + ` is REALLY big!!!`); // 5676567656756765678568 is REALLY big
 console.log(10n / 3n); // 3n
 console.log(11n / 3n); // 3n
 console.log(10 / 3); // 3.3333333333333335
+*/
+
+// Create a Date
+/*
+const now = new Date();
+console.log(now);
+
+console.log(new Date('Tue Jul 18 2023 17:13:06 GMT+0300 (East Africa Time)')); // Tue Jul 18 2023 17:13:06 GMT+0300 (East Africa Time)
+console.log(new Date('December 24, 2015')); // Thu Dec 24 2015 00:00:00 GMT+0300 (East Africa Time)
+console.log(new Date(account1.movementsDates[0]));
+
+console.log(new Date(2023, 6, 18, 17, 35, 45)); // Tue Jul 18 2023 17:35:45 GMT+0300 (East Africa Time)
+console.log(new Date(2023, 11, 31)); // Sun Dec 31 2023 00:00:00 GMT+0300 (East Africa Time)
+
+console.log(new Date(0)); // Thu Jan 01 1970 03:00:00 GMT+0300 (East Africa Time)
+// 3 days after the Unix time
+console.log(new Date(3 * 24 * 60 * 60 * 1000)); // Sun Jan 04 1970 03:00:00 GMT+0300 (East Africa Time)
+*/
+
+// Working with dates
+const future = new Date(2023, 6, 18, 17, 35);
+console.log(future);
+console.log(future.getFullYear()); // 2023
+console.log(future.getMonth()); // 6
+console.log(future.getDate()); // 18
+console.log(future.getDay()); // 2
+console.log(future.getHours()); // 17
+console.log(future.getMinutes()); // 35
+console.log(future.getSeconds()); // 0
+console.log(future.toISOString()); // 2023-07-18T14:35:00.000Z
+console.log(future.getTime()); // 1689690900000
+console.log(new Date(1689690900000)); // Tue Jul 18 2023 17:35:00 GMT+0300 (East Africa Time)
+console.log(Date.now()); // 1689694357781
+
+future.setFullYear(2040);
+console.log(future); // Wed Jul 18 2040 17:35:00 GMT+0300 (East Africa Time)
