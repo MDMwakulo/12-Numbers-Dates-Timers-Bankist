@@ -364,6 +364,8 @@ labelBalance.addEventListener('click', function () {
 });
 */
 
+/*
+// Numeric Separator
 // 287,460,000,000
 const diameter = 287_460_000_000;
 console.log(diameter);
@@ -379,3 +381,37 @@ console.log(PI);
 
 console.log(Number('230_000')); // ERROR
 console.log(parseInt('230_000')); // 230
+*/
+
+// Working with BigInt
+console.log(2 ** 53 - 1); // 9007199254740991
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+console.log(2 ** 53 - 0); // 9007199254740992
+
+console.log(445345456345645656456345345456456545); // 4.453454563456456e+35
+console.log(445345456345645656456345345456456545n); // 445345456345645656456345345456456545n
+console.log(BigInt(44534545636545)); // 44534545636545n
+
+// Operations
+console.log(10000n + 10000n);
+console.log(342432345432343343243243n * 23432343234323432424324334n);
+// console.log(Math.sqrt(64n)); // TypeError: Cannot convert a BigInt value to a number
+
+const huge = 5676567656756765678568n;
+const num = 5867;
+console.log(huge * BigInt(num)); // 33304422442191944236158456n
+
+// Exceptions
+console.log(20n > 5); // true
+console.log(20n === 20); // false (because we are comparing a regular number with a BigInt number)
+console.log(typeof 20n); // bigint
+console.log(typeof 20); //  number
+console.log(20n == 20); // true
+console.log(20 == '20'); // true
+
+console.log(huge + ` is REALLY big!!!`); // 5676567656756765678568 is REALLY big!!!
+
+// Divisions
+console.log(10n / 3n); // 3n
+console.log(11n / 3n); // 3n
+console.log(10 / 3); // 3.3333333333333335
