@@ -186,14 +186,43 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    // In each call, print remaining time to the UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When 0 seconds, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = `Log in to get started`;
+      containerApp.style.opacity = 0;
+    }
+
+    // Decrease 1sec
+    time--;
+  };
+
+  // Set tiime to 5 minutes
+  let time = 20;
+
+  // Call the timer every second
+  tick();
+  const timer = setInterval(tick, 1000);
+  console.log(timer);
+  return timer;
+};
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // FAKE ALWAYS LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 1;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 1;
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -239,6 +268,12 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    // Timer
+    if (timer) {
+      clearInterval(timer);
+    }
+    timer = startLogOutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -269,6 +304,10 @@ btnTransfer.addEventListener('click', function (e) {
     // Update UI
     updateUI(currentAccount);
   }
+
+  // Restart Timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 
 btnLoan.addEventListener('click', function (e) {
@@ -277,16 +316,22 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Add loan dates
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add loan dates
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
+
+  // Restart Timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 
 btnClose.addEventListener('click', function (e) {
@@ -317,6 +362,10 @@ btnSort.addEventListener('click', function (e) {
   e.preventDefault();
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
+
+  // Restart Timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 
 /////////////////////////////////////////////////
@@ -527,7 +576,7 @@ console.log(future); // Wed Jul 18 2040 17:35:00 GMT+0300 (East Africa Time)
 */
 
 /*
-//Internationalizing DAtes (Int)
+//Internationalizing Dates (Int)
 const future = new Date(2037, 10, 19, 15, 23);
 // console.log(+future); // 2142246180000
 
@@ -541,6 +590,8 @@ const days1 = calcDaysPassed(
 // console.log(days1);
 */
 
+/*
+//Internationalizing Numbers (Int)
 const num = 3884764.23;
 const options = {
   style: 'currency',
@@ -559,3 +610,23 @@ console.log(
   navigator.language,
   new Intl.NumberFormat(navigator.language, options).format(num)
 ); // en-GB €3884764.23
+*/
+
+/*
+// setTimeout function
+const ingredients = ['olives', 'kales'];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => console.log(`Here's your pizza with ${ing1} and ${ing2} 🍕`),
+  3000,
+  ...ingredients
+); // Here's your pizza with olives and kales 🍕
+console.log(`Waiting...`);
+
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+
+// setInterval function
+setInterval(function () {
+  const now = new Date();
+  console.log(now);
+}, 3000); // Sat Jul 22 2023 01:53:15 GMT+0300 (East Africa Time)
+*/
